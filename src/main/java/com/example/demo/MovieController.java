@@ -2,6 +2,7 @@ package com.example.demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,7 +11,7 @@ import java.util.List;
 
 // ovde za url treba da koristimo ime tabele a ne movie fiksno
 @RestController
-@RequestMapping({"/api/${vanja.ime.tabele}"})
+@RequestMapping({"/api/movies"})
 public class MovieController {
 
     @Autowired
@@ -26,5 +27,11 @@ public class MovieController {
     public ResponseEntity<Movie> addMovie(@RequestBody Movie movie) {
         movie = (Movie)this.movieRepository.save(movie);
         return ResponseEntity.ok(movie);
+    }
+
+    @GetMapping(value = "/health")
+    public ResponseEntity<Movie> healthy()
+    {
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
